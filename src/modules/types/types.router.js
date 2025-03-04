@@ -9,7 +9,7 @@ const handleValidations = require("../../middlewares/handle.validations");
 
 router.get("/", typesController.getTypes);
 
-router.post("/", updateTypeValidators, handleValidations, typesController.createType);
+router.post("/", createTypeValidators, handleValidations, typesController.createType);
 
 router.put("/:id", updateTypeValidators, handleValidations, typesController.updateType);
 

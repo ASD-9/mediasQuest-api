@@ -13,5 +13,6 @@ app.use("/images", express.static("public/images"));
 
 // Routes
 app.use("/types", routes.typesRouter);
+app.use("/roles", routes.rolesRouter);
 
 module.exports = app;
