@@ -1,4 +1,5 @@
 const express = require("express");
+const routes = require("./routes");
 
 const app = express();
 
@@ -11,5 +12,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/images", express.static("public/images"));
 
 // Routes
+app.use("/types", routes.typesRouter);
 
 module.exports = app;
