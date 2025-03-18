@@ -31,11 +31,13 @@ describe("Test Creators Service", () => {
       const query = `
     SELECT
       c.*,
-      COUNT(m.id) AS medias_count
+      COUNT(CASE WHEN s.name = 'completed' THEN m.id END) AS medias_completed
+      COUNT(CASE WHEN s.name != 'completed' THEN m.id END) AS medias_not_completed
     FROM Creators c
     JOIN Creator_media cm ON c.id = cm.creator_id
     JOIN Medias m ON m.id = cm.media_id
     JOIN Types t ON t.id = m.type_id
+    JOIN Status s ON s.id = m.status_id
     WHERE t.id = ?
     GROUP BY c.id
   `;

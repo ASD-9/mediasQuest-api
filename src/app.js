@@ -16,5 +16,6 @@ app.use("/types", routes.typesRouter);
 app.use("/roles", routes.rolesRouter);
 app.use("/status", routes.statusRouter);
 app.use("/creators", routes.creatorsRouter);
+app.use("/medias", routes.mediasRouter);
 
 module.exports = app;
