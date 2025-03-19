@@ -10,7 +10,7 @@ const handleImageUpload = require("../../middlewares/upload");
 
 router.get("/type/:id", idValidator, handleValidations, mediasController.getMediasByType);
 
-router.get("/creators/:id", idValidator, handleValidations, mediasController.getMediasByCreator);
+router.get("/creator/:id", idValidator, handleValidations, mediasController.getMediasByCreator);
 
 router.post("/", handleImageUpload, createMediaValidators, handleValidations, mediasController.createMedia);
 
