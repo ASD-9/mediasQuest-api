@@ -7,13 +7,15 @@ jest.mock("../../config/database"); // Mock the database
 const mockCreator = {
   id: 1,
   name: "Creator 1",
-  medias_count: 2
+  medias_completed: 2,
+  medias_not_completed: 3
 };
 
 const mockCreator2 = {
   id: 2,
   name: "Creator 2",
-  medias_count: 5
+  medias_completed: 2,
+  medias_not_completed: 3
 };
 
 describe("Test Creators Service", () => {
