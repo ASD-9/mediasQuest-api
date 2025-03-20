@@ -4,8 +4,8 @@ const getCreatorsByType = async (typeId) => {
   const query = `
     SELECT
       c.*,
-      COUNT(CASE WHEN s.name = 'completed' THEN m.id END) AS medias_completed,
-      COUNT(CASE WHEN s.name != 'completed' THEN m.id END) AS medias_not_completed
+      COUNT(CASE WHEN s.name = 'Finit' THEN m.id END) AS medias_completed,
+      COUNT(CASE WHEN s.name != 'Finit' THEN m.id END) AS medias_not_completed
     FROM Creators c
     JOIN Creator_media cm ON c.id = cm.creator_id
     JOIN Medias m ON m.id = cm.media_id
