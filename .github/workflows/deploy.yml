@@ -33,7 +33,6 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
-            ls -la
             cd mediasQuest-env/
             docker compose pull mq-node
             docker compose up -d mq-node
