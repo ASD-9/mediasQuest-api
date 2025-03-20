@@ -34,6 +34,6 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
             cd mediasQuest-env/
-            docker compose pull node
-            docker compose up -d node
+            docker compose pull mq-node
+            docker compose up -d mq-node
             docker image prune -f
