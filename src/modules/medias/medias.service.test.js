@@ -23,19 +23,22 @@ const formatedMediaData = {
   type: {
     id: 1,
     name: "Type 1"
-  }
+  },
+  role: {}
 };
 
-const mockMedia2 = {
+const mockMediaWithRole = {
   id: 2,
   name: "Media 2",
   status_id: 1,
   type_id: 1,
   status_name: "Status 1",
-  type_name: "Type 1"
+  type_name: "Type 1",
+  role_id: 1,
+  role_name: "Role 1"
 };
 
-const formatedMediaData2 = {
+const formatedMediaDataWithRole = {
   id: 2,
   name: "Media 2",
   status: {
@@ -45,6 +48,10 @@ const formatedMediaData2 = {
   type: {
     id: 1,
     name: "Type 1"
+  },
+  role: {
+    id: 1,
+    name: "Role 1"
   }
 };
 
@@ -56,7 +63,7 @@ describe("Test Medias Service", () => {
 
   describe("getMediasByType", () => {
     it("should return an array of medias for a specific type", async () => {
-      const mockData = [mockMedia, mockMedia2];
+      const mockData = [mockMedia];
       pool.execute.mockResolvedValue([mockData]);
 
       const medias = await mediasService.getMediasByType(1);
@@ -72,13 +79,13 @@ describe("Test Medias Service", () => {
   `;
 
       expect(pool.execute).toHaveBeenCalledWith(query, [1]);
-      expect(medias).toEqual([formatedMediaData, formatedMediaData2]);
+      expect(medias).toEqual([formatedMediaData]);
     });
   });
 
   describe("getMediasByCreator", () => {
     it("should return an array of medias for a specific creator", async () => {
-      const mockData = [mockMedia, mockMedia2];
+      const mockData = [mockMediaWithRole];
       pool.execute.mockResolvedValue([mockData]);
 
       const medias = await mediasService.getMediasByCreator(1);
@@ -86,16 +93,19 @@ describe("Test Medias Service", () => {
     SELECT
       m.*,
       s.name as status_name,
-      t.name as type_name
+      t.name as type_name,
+      cm.role_id,
+      r.name as role_name
     FROM Medias m
     JOIN Status s ON s.id = m.status_id
     JOIN Types t ON t.id = m.type_id
     JOIN Creator_media cm ON cm.media_id = m.id
+    JOIN Roles r ON r.id = cm.role_id
     WHERE cm.creator_id = ?
   `;
 
       expect(pool.execute).toHaveBeenCalledWith(query, [1]);
-      expect(medias).toEqual([formatedMediaData, formatedMediaData2]);
+      expect(medias).toEqual([formatedMediaDataWithRole]);
     });
   });
 
@@ -162,18 +172,18 @@ describe("Test Medias Service", () => {
   describe("updateMedia", () => {
     it("should update the specified fields of the media and return the updated media", async () => {
       const mediaData = {
-        name: "Media 2"
+        name: "Media 1"
       };
       const mockResult = { affectedRows: 1 };
       pool.execute
         .mockResolvedValueOnce([mockResult])
-        .mockResolvedValueOnce([[mockMedia2]]);
+        .mockResolvedValueOnce([[mockMedia]]);
 
       const media = await mediasService.updateMedia(1, mediaData);
       const query = `UPDATE Medias SET name = ? WHERE id = ?`;
 
       expect(pool.execute).toHaveBeenCalledWith(query, [mediaData.name, 1]);
-      expect(media).toEqual(formatedMediaData2);
+      expect(media).toEqual(formatedMediaData);
     });
 
     it("should return null if the media is not found", async () => {

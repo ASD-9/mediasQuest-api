@@ -11,6 +11,10 @@ const formatMediaData = (row) => {
     type: {
       id: row.type_id,
       name: row.type_name
+    },
+    role: {
+      id: row.role_id,
+      name: row.role_name
     }
   };
 }
@@ -35,11 +39,14 @@ const getMediasByCreator = async (creatorId) => {
     SELECT
       m.*,
       s.name as status_name,
-      t.name as type_name
+      t.name as type_name,
+      cm.role_id,
+      r.name as role_name
     FROM Medias m
     JOIN Status s ON s.id = m.status_id
     JOIN Types t ON t.id = m.type_id
     JOIN Creator_media cm ON cm.media_id = m.id
+    JOIN Roles r ON r.id = cm.role_id
     WHERE cm.creator_id = ?
   `;
   const [rows] = await pool.execute(query, [creatorId]);
