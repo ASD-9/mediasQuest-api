@@ -88,7 +88,7 @@ describe("Test Medias Service", () => {
       const mockData = [mockMediaWithRole];
       pool.execute.mockResolvedValue([mockData]);
 
-      const medias = await mediasService.getMediasByCreator(1);
+      const medias = await mediasService.getMediasByCreator(1, 1);
       const query = `
     SELECT
       m.*,
@@ -101,10 +101,10 @@ describe("Test Medias Service", () => {
     JOIN Types t ON t.id = m.type_id
     JOIN Creator_media cm ON cm.media_id = m.id
     JOIN Roles r ON r.id = cm.role_id
-    WHERE cm.creator_id = ?
+    WHERE cm.creator_id = ? AND m.type_id = ?
   `;
 
-      expect(pool.execute).toHaveBeenCalledWith(query, [1]);
+      expect(pool.execute).toHaveBeenCalledWith(query, [1, 1]);
       expect(medias).toEqual([formatedMediaDataWithRole]);
     });
   });

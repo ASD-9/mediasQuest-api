@@ -12,7 +12,7 @@ const getMediasByType = async (req, res) => {
 
 const getMediasByCreator = async (req, res) => {
   try {
-    const medias = await mediasService.getMediasByCreator(req.params.id);
+    const medias = await mediasService.getMediasByCreator(req.params.creatorId, req.params.typeId);
     responseHandler(res, 200, "Médias récupérés avec succès", medias);
   } catch (error) {
     responseHandler(res, 500, "Une erreur est survenue lors de la récupération des médias", null, error);

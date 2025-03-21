@@ -1,5 +1,10 @@
 const { body, param } = require("express-validator");
 
+const getMediasByCreatorValidators = [
+  param("creatorId").isInt({ min: 1 }).withMessage("L'id du créateur doit être un entier positif"),
+  param("typeId").isInt({ min: 1 }).withMessage("L'id du type doit être un entier positif")
+];
+
 const createMediaValidators = [
   // Check that the name is not empty, a string, and at least 3 characters long
   body("name")

@@ -34,7 +34,7 @@ const getMediasByType = async (typeId) => {
   return rows.map(row => formatMediaData(row));
 }
 
-const getMediasByCreator = async (creatorId) => {
+const getMediasByCreator = async (creatorId, typeId) => {
   const query = `
     SELECT
       m.*,
@@ -47,9 +47,9 @@ const getMediasByCreator = async (creatorId) => {
     JOIN Types t ON t.id = m.type_id
     JOIN Creator_media cm ON cm.media_id = m.id
     JOIN Roles r ON r.id = cm.role_id
-    WHERE cm.creator_id = ?
+    WHERE cm.creator_id = ? AND m.type_id = ?
   `;
-  const [rows] = await pool.execute(query, [creatorId]);
+  const [rows] = await pool.execute(query, [creatorId, typeId]);
   return rows.map(row => formatMediaData(row));
 }
 
