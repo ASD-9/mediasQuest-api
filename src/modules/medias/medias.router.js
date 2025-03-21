@@ -4,13 +4,13 @@ const router = Router();
 const mediasController = require("./medias.controller");
 
 const idValidator = require("../../utils/id.validator");
-const { createMediaValidators, updateMediaValidators, addMediaToCreatorValidators, removeMediaFromCreatorValidators } = require("./medias.validators");
+const { getMediasByCreatorValidators, createMediaValidators, updateMediaValidators, addMediaToCreatorValidators, removeMediaFromCreatorValidators } = require("./medias.validators");
 const handleValidations = require("../../middlewares/handle.validations");
 const handleImageUpload = require("../../middlewares/upload");
 
 router.get("/type/:id", idValidator, handleValidations, mediasController.getMediasByType);
 
-router.get("/creator/:creatorId/type/:typeId", idValidator, handleValidations, mediasController.getMediasByCreator);
+router.get("/creator/:creatorId/type/:typeId", getMediasByCreatorValidators, handleValidations, mediasController.getMediasByCreator);
 
 router.post("/", handleImageUpload, createMediaValidators, handleValidations, mediasController.createMedia);
 

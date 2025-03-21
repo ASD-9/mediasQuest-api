@@ -1,4 +1,5 @@
 const { body, param } = require("express-validator");
+const { get } = require("./medias.router");
 
 const getMediasByCreatorValidators = [
   param("creatorId").isInt({ min: 1 }).withMessage("L'id du créateur doit être un entier positif"),
@@ -59,6 +60,7 @@ const removeMediaFromCreatorValidators = [
 ];
 
 module.exports = {
+  getMediasByCreatorValidators,
   createMediaValidators,
   updateMediaValidators,
   addMediaToCreatorValidators,
