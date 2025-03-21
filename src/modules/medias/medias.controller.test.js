@@ -63,24 +63,24 @@ describe("Test Medias Controller", () => {
 
   describe("getMediasByCreator", () => {
     it("should return a list of medias with status 200", async () => {
-      const mockReq = { params: { id: 1 } };
+      const mockReq = { params: { creatorId: 1, typeId: 1 } };
       const mockMedias = [mockMedia, mockMedia2];
       mediasService.getMediasByCreator.mockResolvedValue(mockMedias);
 
       await mediasController.getMediasByCreator(mockReq, {});
 
-      expect(mediasService.getMediasByCreator).toHaveBeenCalledWith(mockReq.params.id);
+      expect(mediasService.getMediasByCreator).toHaveBeenCalledWith(mockReq.params.creatorId, mockReq.params.typeId);
       expect(responseHandler).toHaveBeenCalledWith({}, 200, "Médias récupérés avec succès", mockMedias);
     });
 
     it("should return an error with status 500", async () => {
-      const mockReq = { params: { id: 1 } };
+      const mockReq = { params: { creatorId: 1, typeId: 1 } };
       const mockError = new Error("Database error");
       mediasService.getMediasByCreator.mockRejectedValue(mockError);
 
       await mediasController.getMediasByCreator(mockReq, {});
 
-      expect(mediasService.getMediasByCreator).toHaveBeenCalledWith(mockReq.params.id);
+      expect(mediasService.getMediasByCreator).toHaveBeenCalledWith(mockReq.params.creatorId, mockReq.params.typeId);
       expect(responseHandler).toHaveBeenCalledWith({}, 500, "Une erreur est survenue lors de la récupération des médias", null, mockError);
     });
   });
